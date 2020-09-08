@@ -1,4 +1,4 @@
-## VAEs (Variational Auto Encoder)
+## Stacked_VAEs (Variational Auto Encoder)
 
 ### Introduction
 In the last few years, deep learning based generative models have gained more and more interest due to (and implying) some amazing improvements in the field.  
@@ -46,8 +46,14 @@ Training & Prediction can be run as follows:
 ### More information
 * Please refer to the original paper of VAE [here](https://towardsdatascience.com/understanding-variational-autoencoders-vaes-f70510919f73) for more information.
 
-### Result for MNIST:   
+### Result of Stacked_VAEs for MNIST:   
 * Learning rate = 1e-4
 * Batch size = 4  
 * Optimizer = Adam   
 * latent_dim = 200
+
+Epoch | Training Loss |  Validation Loss  | True image and predicted image
+:---: | :---: | :---: | :---:
+10 | 0.0084 | 0.0072 | <img src="img/epoch10.png" />
+20 | 0.0037 | 0.0040 | <img src="img/epoch20.png" />
+30 | 0.0030| 0.0034 | <img src="img/epoch30.png" />
