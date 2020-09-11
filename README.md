@@ -20,11 +20,12 @@ Moreover, the term “variational” comes from the close relation there is betw
 
 ### The Architecrure of VAEs
 <center>   
-<img src="img/2.png" width="500" height="300"/>      
-
-Images are taken from [source](https://qiita.com/kenchin110100/items/7ceb5b8e8b21c551d69a)
+<img src="img/vae1.png" width="500" height="300"/>   
+</center>   
+<p></p>
+<center>     
+<img src="img/vae2.png" width="500" height="300"/>   
 </center>
-
 
 ### Training on MNIST
 <p></p>
