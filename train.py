@@ -27,7 +27,7 @@ model_name = "models/stacked/digists"
 data_path  = "../../data_img/MNIST/train/"
 
 # Step 0: Global Parameters
-epochs     = 10
+epochs     = 1
 lr_rate    = 1e-4
 batch_size = 4
 
@@ -44,7 +44,7 @@ if sys.argv[1] == "train":
     X_train, Y_train, X_valid, Y_valid = loader.load_light(data_path,image_size,image_size,True,0.8,True)
 
     # Step 4: Training
-    model.load_weights(model_name)
+    # model.load_weights(model_name)
 
     # Define The Optimizer
     optimizer= tf.keras.optimizers.Adam(learning_rate=lr_rate) #, beta_1 = 0.5)

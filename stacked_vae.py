@@ -24,8 +24,10 @@ class STACKED_VAE(tf.keras.Model):
         self.flatten  = tf.keras.layers.Flatten()
         self.en_dense1= tf.keras.layers.Dense(units = self.linear_dim   , activation="relu", name = "en_fc1")
         self.en_dense2= tf.keras.layers.Dense(units = self.linear_dim>>1, activation="relu", name = "en_fc2")
-        self.en_dense3= tf.keras.layers.Dense(units = self.latent_dim   , name = "en_fc3")
-        self.en_act   = tf.keras.layers.Activation("relu", name = "en_main_out")
+
+        # Latent Space
+        self.la_dense1= tf.keras.layers.Dense(units = self.latent_dim   , name = "la_fc1")
+        self.la_dense2= tf.keras.layers.Dense(units = self.latent_dim   , name = "la_fc2")
 
         # Decoder Layers
         self.de_dense1= tf.keras.layers.Dense(units = self.linear_dim>>1, activation="relu", name = "de_fc1")
@@ -42,9 +44,6 @@ class STACKED_VAE(tf.keras.Model):
         x = self.flatten(x)
         x = self.en_dense1(x)
         x = self.en_dense2(x)
-        # Latent Space
-        x = self.en_dense3(x)
-        x = self.en_act(x)
         return x
 
     #................................................................................
@@ -60,15 +59,30 @@ class STACKED_VAE(tf.keras.Model):
         return x
 
     #................................................................................
+    # Latent Space
+    #................................................................................
+    def latent_space(self,x):
+        mu  = self.la_dense1(x)
+        std = self.la_dense2(x)
+        shape = mu.shape[1:]
+        eps = tf.random.normal(shape, 0.0, 1.0)
+        x = mu + eps * (tf.math.exp(std/2.0))
+        return x
+
+    #................................................................................
     #
     #................................................................................
     def call(self, inputs, training = None):
         # inputs = self.in_layer(inputs)
-        self.encoded = self.encoder(inputs, training)
+        # self.encoded = self.encoder(inputs, training)
+        #
+        # self.latent_space = self.latent_space(self.encoded)
+        #
+        # self.decoded = self.decoder(self.latent_space, training)
 
-        shape = self.encoded.shape[1:]
-        x = tf.random.uniform(shape, minval=0.0, maxval=1.0)
-        de_input = self.encoded + x
+        x = self.encoder(inputs, training)
 
-        self.decoded = self.decoder(de_input, training)
-        return self.decoded
+        x = self.latent_space(x)
+
+        x = self.decoder(x, training)
+        return x
